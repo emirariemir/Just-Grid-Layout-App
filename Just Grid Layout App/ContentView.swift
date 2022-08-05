@@ -47,12 +47,12 @@ struct ContentView: View {
             ScrollView {
                 // NOTE THIS
                 LazyVGrid(columns: [
-                    GridItem(.flexible(minimum: 100, maximum: 200), spacing: 12, alignment: .top),
-                    GridItem(.flexible(minimum: 100, maximum: 200), spacing: 12, alignment: .top),
-                    GridItem(.flexible(minimum: 100, maximum: 200), alignment: .top)
+                    GridItem(.flexible(minimum: 50, maximum: 200), spacing: 16, alignment: .top),
+                    GridItem(.flexible(minimum: 100, maximum: 200), spacing: 16, alignment: .top),
+                    GridItem(.flexible(minimum: 100, maximum: 200), spacing: 16)
                 ], spacing: 12, content: {
                     ForEach(vm.results, id: \.self) { app in
-                        VStack (alignment: .leading) {
+                        VStack (alignment: .leading, spacing: 4) {
                             Spacer()
                                 .frame(width: 100, height: 100)
                                 .background(Color.blue)
@@ -63,7 +63,7 @@ struct ContentView: View {
                             Text(app.releaseDate)
                                 .font(.system(size: 11, weight: .regular))
                         }
-                        .padding()
+                        .padding(.horizontal)
                         //.background(Color.green)
                     }
                 }).padding(.horizontal, 12)
