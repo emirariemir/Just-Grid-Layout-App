@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 class GridViewModel: ObservableObject {
     @Published var items = 0..<10
@@ -48,25 +49,14 @@ struct ContentView: View {
                 // NOTE THIS
                 LazyVGrid(columns: [
                     GridItem(.flexible(minimum: 50, maximum: 200), spacing: 16, alignment: .top),
-                    GridItem(.flexible(minimum: 100, maximum: 200), spacing: 16, alignment: .top),
-                    GridItem(.flexible(minimum: 100, maximum: 200), spacing: 16)
+                    GridItem(.flexible(minimum: 100, maximum: 200), spacing: 16, alignment: .top)
                 ], spacing: 12, content: {
                     ForEach(vm.results, id: \.self) { app in
-                        VStack (alignment: .leading, spacing: 4) {
-                            Spacer()
-                                .frame(width: 100, height: 100)
-                                .background(Color.blue)
-                            Text(app.name)
-                                .font(.system(size: 12, weight: .semibold))
-                            Text(app.artistName)
-                                .font(.system(size: 11, weight: .regular))
-                            Text(app.releaseDate)
-                                .font(.system(size: 11, weight: .regular))
-                        }
-                        .padding(.horizontal)
+                        AlbumCard(app: app)
+                        //.padding(.horizontal)
                         //.background(Color.green)
                     }
-                }).padding(.horizontal, 12)
+                }).padding(.horizontal, 12).padding(.vertical, 6)
             }.navigationTitle("Music Layout")
         }
     }
@@ -75,5 +65,26 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+    }
+}
+
+struct AlbumCard: View {
+    var app: Result
+    
+    var body: some View {
+        VStack (alignment: .leading, spacing: 4) {
+            KFImage(URL(string: app.artworkUrl100))
+                .resizable()
+                .scaledToFit()
+                .cornerRadius(10)
+                .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 10)
+            Text(app.name)
+                .font(.system(size: 20, weight: .semibold))
+            //.padding(.top, 4)
+            Text(app.artistName)
+                .font(.system(size: 15, weight: .regular))
+            Text(app.releaseDate)
+                .font(.system(size: 11, weight: .regular))
+        }
     }
 }
